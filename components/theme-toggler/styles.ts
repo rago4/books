@@ -13,6 +13,6 @@ export const Button = styled.button`
   transition: background-color 0.2s ease;
 
   &:hover {
-    background-color: ${({ theme }) => theme.togglerBackground};
+    background-color: var(--toggler);
   }
 `;

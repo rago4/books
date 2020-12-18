@@ -14,8 +14,8 @@ export const GlobalStyle = createGlobalStyle<{ theme: Theme }>`
     margin: 0;
     font-family: ${({ theme }) => theme.font}; 
     font-size: 1rem;
-    color: ${({ theme }) => theme.text};
-    background-color: ${({ theme }) => theme.background};
+    color: var(--text);
+    background-color: var(--background);
     transition: background-color .2s ease, color .2s ease;
   }
 

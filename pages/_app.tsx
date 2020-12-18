@@ -1,6 +1,5 @@
 import { AppProps } from "next/app";
 import Head from "next/head";
-import { ThemeProvider } from "../context/theme";
 
 export default function CustomApp({ Component, pageProps }: AppProps) {
   return (
@@ -12,9 +11,7 @@ export default function CustomApp({ Component, pageProps }: AppProps) {
         />
         <title>Books</title>
       </Head>
-      <ThemeProvider>
-        <Component {...pageProps} />
-      </ThemeProvider>
+      <Component {...pageProps} />
     </>
   );
 }

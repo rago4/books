@@ -21,7 +21,7 @@ export const Title = styled.h2`
 `;
 
 export const Link = styled.a`
-  color: ${({ theme }) => theme.text};
+  color: var(--text);
   text-decoration: none;
   transition: color 0.2s ease;
 

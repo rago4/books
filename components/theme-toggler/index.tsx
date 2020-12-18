@@ -1,13 +1,39 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import Emoji from "../emoji";
-import { useTheme } from "../../context/theme";
+import { LOCAL_STORAGE } from "../../constants/local-storage";
 import { Button } from "./styles";
 
-const ThemeToggler: FC = () => {
-  const { isLight, toggleTheme } = useTheme();
+enum Theme {
+  light = "light",
+  dark = "dark",
+}
 
-  const emojiLabel = isLight ? "Moon emoji" : "Sun emoji";
-  const emojiSymbol = isLight ? "🌙" : "☀️";
+const isClient = process.browser;
+
+const { THEME } = LOCAL_STORAGE;
+
+const ThemeToggler: FC = () => {
+  const [hasMounted, setMounted] = useState(false);
+  const [isDark, setIsDark] = useState(
+    isClient && localStorage.getItem(THEME) === Theme.dark
+  );
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!hasMounted) {
+    return null;
+  }
+
+  const emojiLabel = isDark ? "Sun emoji" : "Moon emoji";
+  const emojiSymbol = isDark ? "☀️" : "🌙";
+
+  const toggleTheme = () => {
+    setIsDark(!isDark);
+    // @ts-ignore - `changeTheme` is applied to the window object in external file
+    window.changeTheme(!isDark ? Theme.dark : Theme.light);
+  };
 
   return (
     <Button aria-label="Toggle theme" onClick={toggleTheme}>

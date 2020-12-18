@@ -1,6 +1,5 @@
 import { NextPage } from "next";
 import Article from "../components/article";
-import ClientOnly from "../components/client-only";
 import Emoji from "../components/emoji";
 import Layout from "../components/layout";
 import ThemeToggler from "../components/theme-toggler";
@@ -19,9 +18,7 @@ const Index: NextPage<Props> = ({ content }) => (
           <Emoji label="Pile of books emoji" symbol="📚" />
           <span> Books</span>
         </Brand>
-        <ClientOnly>
-          <ThemeToggler />
-        </ClientOnly>
+        <ThemeToggler />
       </Nav>
       <Intro>
         List of the books that I've recently read. Each of the books is rated in

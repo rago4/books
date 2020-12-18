@@ -1,5 +1,4 @@
 import { FC } from "react";
-import ClientOnly from "../client-only";
 import Emoji from "../emoji";
 import { Content } from "../../utils/get-all-content";
 import {
@@ -62,11 +61,9 @@ const Article: FC<Props> = ({ content }) => {
       <Header>
         <div>
           <Title>
-            <ClientOnly>
-              <Link target="_blank" rel="noreferrer noopener" href={goodreads}>
-                {title} ({year})
-              </Link>
-            </ClientOnly>
+            <Link target="_blank" rel="noreferrer noopener" href={goodreads}>
+              {title} ({year})
+            </Link>
           </Title>
           <span>by {author}</span>
         </div>

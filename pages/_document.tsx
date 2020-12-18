@@ -1,4 +1,5 @@
-import Document from "next/document";
+import Document, { Head, Html, Main, NextScript } from "next/document";
+import React from "react";
 import { ServerStyleSheet } from "styled-components";
 
 export default class CustomDocument extends Document {
@@ -26,5 +27,19 @@ export default class CustomDocument extends Document {
     } finally {
       sheet.seal();
     }
+  }
+
+  render() {
+    return (
+      <Html>
+        <Head>
+          <script src="theme.js"></script>
+        </Head>
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    );
   }
 }
