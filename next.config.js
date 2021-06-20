@@ -1,12 +1,12 @@
 module.exports = {
   i18n: {
-    locales: ["en"],
-    defaultLocale: "en",
+    locales: ['en'],
+    defaultLocale: 'en',
   },
   webpack: function (config) {
     config.module.rules.push({
       test: /\.md$/,
-      use: "raw-loader",
+      use: 'raw-loader',
     });
 
     return config;

@@ -1,41 +1,29 @@
-import Document, { Head, Html, Main, NextScript } from "next/document";
-import React from "react";
-import { ServerStyleSheet } from "styled-components";
+import Document, {
+  DocumentContext,
+  Html,
+  Head,
+  Main,
+  NextScript,
+} from 'next/document';
+import cookies from 'next-cookies';
+import { THEME } from '../utils/constants';
 
-export default class CustomDocument extends Document {
-  static async getInitialProps(context) {
-    const sheet = new ServerStyleSheet();
-    const originalRenderPage = context.renderPage;
+interface Props {
+  theme: string;
+}
+class CustomDocument extends Document<Props> {
+  static async getInitialProps(ctx: DocumentContext) {
+    const initialProps = await Document.getInitialProps(ctx);
+    const theme = cookies(ctx).theme || THEME.LIGHT;
 
-    try {
-      context.renderPage = () =>
-        originalRenderPage({
-          enhanceApp: (App) => (props) =>
-            sheet.collectStyles(<App {...props} />),
-        });
-
-      const initialProps = await Document.getInitialProps(context);
-      return {
-        ...initialProps,
-        styles: (
-          <>
-            {initialProps.styles}
-            {sheet.getStyleElement()}
-          </>
-        ),
-      };
-    } finally {
-      sheet.seal();
-    }
+    return { ...initialProps, theme };
   }
 
   render() {
     return (
       <Html>
-        <Head>
-          <script src="theme.js"></script>
-        </Head>
-        <body>
+        <Head />
+        <body className={this.props.theme}>
           <Main />
           <NextScript />
         </body>
@@ -43,3 +31,5 @@ export default class CustomDocument extends Document {
     );
   }
 }
+
+export default CustomDocument;

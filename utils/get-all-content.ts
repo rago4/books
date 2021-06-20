@@ -1,4 +1,4 @@
-import matter from "gray-matter";
+import matter from 'gray-matter';
 
 export interface Content {
   goodreads: string;
@@ -13,7 +13,7 @@ export interface Content {
 const toUnix = (value: string): number => new Date(value).getTime();
 
 export async function getAllContent(): Promise<Content[]> {
-  const context = require.context("../content", false, /\.md$/);
+  const context = require.context('../content', false, /\.md$/);
   const content: Content[] = [];
 
   for (const key of context.keys()) {
