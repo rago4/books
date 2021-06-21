@@ -1,17 +1,16 @@
-import { GetServerSideProps, NextPage } from 'next';
+import { GetStaticProps, NextPage } from 'next';
 import Link from 'next/link';
 import { Article } from '../components/article';
 import { Emoji } from '../components/emoji';
 import { ThemeToggler } from '../components/theme-toggler';
+import { APP_PATHS } from '../utils/constants';
 import { getAllContent, Content } from '../utils/get-all-content';
-import { APP_PATHS, THEME } from '../utils/constants';
 
 interface Props {
   content: Content[];
-  theme: string;
 }
 
-const Index: NextPage<Props> = ({ content, theme }) => (
+const Index: NextPage<Props> = ({ content }) => (
   <div className="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-50 transition-colors">
     <div className="max-w-3xl mx-auto sm:py-8 py-6 px-4">
       <header>
@@ -24,7 +23,7 @@ const Index: NextPage<Props> = ({ content, theme }) => (
               </a>
             </Link>
           </h1>
-          <ThemeToggler theme={theme} />
+          <ThemeToggler />
         </div>
         <p className="text">
           List of the books that I&apos;ve recently read. Each of the books is
@@ -40,13 +39,11 @@ const Index: NextPage<Props> = ({ content, theme }) => (
   </div>
 );
 
-export const getServerSideProps: GetServerSideProps<Props> = async ctx => {
+export const getStaticProps: GetStaticProps<Props> = async () => {
   const content = await getAllContent();
-  const cookies = ctx.req.cookies;
-  const theme = cookies.theme || THEME.LIGHT;
 
   return {
-    props: { content, theme },
+    props: { content },
   };
 };
 

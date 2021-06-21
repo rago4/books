@@ -1,31 +1,32 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useTheme } from 'next-themes';
 import { Emoji } from './emoji';
-import { COOKIES, THEME } from '../utils/constants';
+import { THEME } from '../utils/constants';
 
-interface Props {
-  theme: string;
-}
+const { DARK, LIGHT } = THEME;
 
-export const ThemeToggler = ({ theme }: Props) => {
-  const [currentTheme, setTheme] = useState(theme);
+export const ThemeToggler = () => {
+  const [isMounted, setMounted] = useState(false);
+  const { resolvedTheme, setTheme } = useTheme();
 
-  const isDark = currentTheme === THEME.DARK;
-  const label = isDark ? 'Sun emoji' : 'Moon emoji';
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!isMounted) return null;
+
+  const isDark = resolvedTheme === DARK;
   const sign = isDark ? '☀️' : '🌙';
+  const label = isDark ? 'Sun emoji' : 'Moon emoji';
 
   const handleClick = () => {
-    const newTheme = isDark ? THEME.LIGHT : THEME.DARK;
-    const cookieExpire = new Date(2038, 0, 1).toUTCString();
-
-    setTheme(newTheme);
-    document.body.className = newTheme;
-    document.cookie = `${COOKIES.THEME}=${newTheme};expires=${cookieExpire}`;
+    setTheme(resolvedTheme === DARK ? LIGHT : DARK);
   };
 
   return (
     <button
       className="w-9 h-9 flex items-center justify-center rounded text outline transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
-      name="theme-toggler"
+      aria-label="Toggle theme"
       onClick={handleClick}>
       <Emoji label={label} sign={sign} />
     </button>
